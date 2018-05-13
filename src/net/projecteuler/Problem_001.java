@@ -1,8 +1,6 @@
 package net.projecteuler;
 
-import java.util.function.IntSupplier;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 /**
  * @author Bence
@@ -16,34 +14,29 @@ public class Problem_001
 {
 	public static void main(String[] args)
 	{
-		for (int count = 0; count < 10; count++) {
-			System.out.println(fibonacci2().limit(10));
-		}
-		
+		final Long startedAt = System.currentTimeMillis();
+		final long result = solution_1(1000, 3, 5);
+		final Long finishedAt = System.currentTimeMillis();
+
+		System.out.println(result + " [" + (finishedAt - startedAt) + " ms]");
 	}
 
-	public static Stream<Integer> fibonacci2()
-	{ // ref: Java 8 in Action, section 5.7;
-		return Stream.iterate(new int[] { 0, 1 }, t -> new int[] { t[1], t[0] + t[1] }).map(t -> t[0]);
-	}
-
-	public static Stream<Integer> fibonacci3()
+	public static long solution_1(final int limit, final int... divisors)
 	{
-		IntSupplier s = new IntSupplier() {
-			int previous = 0;
-			int current = 1; // <- record the states;
+		long sum = 0;
 
-			@Override
-			public int getAsInt()
+		for (int number = Arrays.stream(divisors).min().getAsInt(); number < limit; number++)
+		{
+			for (final int divisor : divisors)
 			{
-				int retval = previous;
-				int next = current + previous;
-				previous = current;
-				current = next;
-				return retval;
+				if (number % divisor == 0)
+				{
+					sum += number;
+					break;
+				}
 			}
-		};
+		}
 
-		return IntStream.generate(s).boxed();
+		return sum;
 	}
 }
