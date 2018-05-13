@@ -34,13 +34,13 @@ public class FibonacciSeries
 			throw new IllegalArgumentException("Element must be positive;");
 
 		final Stream<Long> fibonacciStream = getFibonacciSeriesStream(first, second);
-		final List<Long> nextElements = fibonacciStream.skip(skip).limit(count).collect(toList());
+		final List<Long> elements = fibonacciStream.skip(skip).limit(count).collect(toList());
 
 		skip = count > 1 ? 2 : 0;
-		second = (count > 1 ? nextElements.get(count - 1) : second + first);
-		first = (count > 1 ? nextElements.get(count - 2) : second - first);
+		second = (count > 1 ? elements.get(count - 1) : second + first);
+		first = (count > 1 ? elements.get(count - 2) : second - first);
 
-		return nextElements;
+		return elements;
 	}
 
 	private Stream<Long> getFibonacciSeriesStream(final long first, final long second)

@@ -12,7 +12,7 @@ import java.util.Arrays;
  */
 public class Problem_001
 {
-	public static void main(String[] args)
+	public static void main(final String[] args)
 	{
 		final Long startedAt = System.currentTimeMillis();
 		final long result = solution_1(1000, 3, 5);
